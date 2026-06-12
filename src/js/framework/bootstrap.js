@@ -96,38 +96,33 @@
             var ns    = this._namespace,
                 $icon = $field.data(ns + '.icon');
             if ($icon) {
+                var el = $icon[0],
+                    instance;
+                $icon.css({ 'cursor': 'pointer', 'pointer-events': 'auto' });
                 switch (type) {
                     case 'popover':
-                        $icon
-                            .css({
-                                'cursor': 'pointer',
-                                'pointer-events': 'auto'
-                            })
-                            .popover('destroy')
-                            .popover({
-                                container: 'body',
-                                content: message,
-                                html: true,
-                                placement: 'auto top',
-                                trigger: 'hover click'
-                            });
+                        instance = bootstrap.Popover.getInstance(el);
+                        if (instance) { instance.dispose(); }
+                        new bootstrap.Popover(el, {
+                            container: 'body',
+                            content: message,
+                            html: true,
+                            placement: 'top',
+                            trigger: 'hover click'
+                        });
                         break;
 
                     case 'tooltip':
                     /* falls through */
                     default:
-                        $icon
-                            .css({
-                                'cursor': 'pointer',
-                                'pointer-events': 'auto'
-                            })
-                            .tooltip('destroy')
-                            .tooltip({
-                                container: 'body',
-                                html: true,
-                                placement: 'auto top',
-                                title: message
-                            });
+                        instance = bootstrap.Tooltip.getInstance(el);
+                        if (instance) { instance.dispose(); }
+                        new bootstrap.Tooltip(el, {
+                            container: 'body',
+                            html: true,
+                            placement: 'top',
+                            title: message
+                        });
                         break;
                 }
             }
@@ -143,25 +138,20 @@
             var ns    = this._namespace,
                 $icon = $field.data(ns + '.icon');
             if ($icon) {
+                var el = $icon[0],
+                    instance;
+                $icon.css({ 'cursor': '', 'pointer-events': 'none' });
                 switch (type) {
                     case 'popover':
-                        $icon
-                            .css({
-                                'cursor': '',
-                                'pointer-events': 'none'
-                            })
-                            .popover('destroy');
+                        instance = bootstrap.Popover.getInstance(el);
+                        if (instance) { instance.dispose(); }
                         break;
 
                     case 'tooltip':
                     /* falls through */
                     default:
-                        $icon
-                            .css({
-                                'cursor': '',
-                                'pointer-events': 'none'
-                            })
-                            .tooltip('destroy');
+                        instance = bootstrap.Tooltip.getInstance(el);
+                        if (instance) { instance.dispose(); }
                         break;
                 }
             }
@@ -177,15 +167,19 @@
             var ns    = this._namespace,
                 $icon = $field.data(ns + '.icon');
             if ($icon) {
+                var el = $icon[0],
+                    instance;
                 switch (type) {
                     case 'popover':
-                        $icon.popover('hide');
+                        instance = bootstrap.Popover.getInstance(el);
+                        if (instance) { instance.hide(); }
                         break;
 
                     case 'tooltip':
                     /* falls through */
                     default:
-                        $icon.tooltip('hide');
+                        instance = bootstrap.Tooltip.getInstance(el);
+                        if (instance) { instance.hide(); }
                         break;
                 }
             }
@@ -201,15 +195,19 @@
             var ns    = this._namespace,
                 $icon = $field.data(ns + '.icon');
             if ($icon) {
+                var el = $icon[0],
+                    instance;
                 switch (type) {
                     case 'popover':
-                        $icon.popover('show');
+                        instance = bootstrap.Popover.getInstance(el);
+                        if (instance) { instance.show(); }
                         break;
 
                     case 'tooltip':
                     /* falls through */
                     default:
-                        $icon.tooltip('show');
+                        instance = bootstrap.Tooltip.getInstance(el);
+                        if (instance) { instance.show(); }
                         break;
                 }
             }
