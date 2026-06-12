@@ -28,18 +28,29 @@
     "main": "./dist/js/formValidation.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/formvalidation/formvalidation.git"
+        "url": "https://github.com/infoxchange/formvalidation.git"
     },
     "devDependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.4",
-        "bootstrap": "^5.3.8",
-        "grunt": "latest",
-        "grunt-contrib-concat": "latest",
-        "grunt-contrib-copy": "latest",
-        "grunt-contrib-cssmin": "latest",
-        "grunt-contrib-jasmine": "latest",
-        "grunt-contrib-jshint": "latest",
-        "grunt-contrib-uglify": "latest",
-        "grunt-contrib-watch": "latest"
+        "@fortawesome/fontawesome-free": "5.15.4",
+        "bootstrap": "5.3.8",
+        "grunt": "1.6.2",
+        "grunt-contrib-concat": "2.1.0",
+        "grunt-contrib-copy": "1.0.0",
+        "grunt-contrib-cssmin": "5.0.0",
+        "grunt-contrib-jasmine": "4.0.0",
+        "grunt-contrib-jshint": "3.2.0",
+        "grunt-contrib-uglify": "5.2.2",
+        "grunt-contrib-watch": "1.1.0"
+    },
+    "overrides": {
+        "tar": "7.5.16",
+        "tar-fs": "2.1.4",
+        "ws": "8.21.0",
+        "jshint": {
+            "minimatch": "3.1.5"
+        },
+        "globule": {
+            "minimatch": "3.1.5"
+        }
     }
 }
