@@ -129,9 +129,9 @@ describe('i18n', function() {
         $('#i18nForm').formValidation({
             clazz: {
                 icon: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
+                    valid: 'fa fa-check',
+                    invalid: 'fa fa-times',
+                    validating: 'fa fa-sync'
                 }
             },
             fields: {

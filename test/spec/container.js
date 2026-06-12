@@ -29,13 +29,13 @@ describe('container form option', function() {
         this.$firstName = this.fv.getFieldElements('firstName');
         this.$lastName  = this.fv.getFieldElements('lastName');
 
-        expect($('#errors').find('.help-block').length).toBeGreaterThan(0);
+        expect($('#errors').find('.invalid-feedback').length).toBeGreaterThan(0);
 
         this.$firstName.val('First');
         this.$lastName.val('');
         this.fv.validate();
-        expect($('#errors').find('.help-block:visible[data-fv-for="firstName"]').length).toEqual(0);
-        expect($('#errors').find('.help-block:visible[data-fv-for="lastName"]').length).toBeGreaterThan(0);
+        expect($('#errors').find('.invalid-feedback:visible[data-fv-for="firstName"]').length).toEqual(0);
+        expect($('#errors').find('.invalid-feedback:visible[data-fv-for="lastName"]').length).toBeGreaterThan(0);
     });
 
     it('form container programmatically', function() {
@@ -49,19 +49,19 @@ describe('container form option', function() {
         this.$firstName = this.fv.getFieldElements('firstName');
         this.$lastName  = this.fv.getFieldElements('lastName');
 
-        expect($('#errors').find('.help-block').length).toBeGreaterThan(0);
+        expect($('#errors').find('.invalid-feedback').length).toBeGreaterThan(0);
 
         this.$firstName.val('');
         this.$lastName.val('Last');
         this.fv.validate();
-        expect($('#errors').find('.help-block:visible[data-fv-for="firstName"]').length).toBeGreaterThan(0);
-        expect($('#errors').find('.help-block:visible[data-fv-for="lastName"]').length).toEqual(0);
+        expect($('#errors').find('.invalid-feedback:visible[data-fv-for="firstName"]').length).toBeGreaterThan(0);
+        expect($('#errors').find('.invalid-feedback:visible[data-fv-for="lastName"]').length).toEqual(0);
 
         this.fv.resetForm();
         this.$firstName.val('First');
         this.$lastName.val('Last');
         this.fv.validate();
-        expect($('#errors').find('.help-block:visible').length).toEqual(0);
+        expect($('#errors').find('.invalid-feedback:visible').length).toEqual(0);
     });
 });
 
@@ -73,11 +73,11 @@ describe('container field option', function() {
                     '<label class="col-lg-3 control-label">Full name</label>',
                     '<div class="col-lg-4">',
                         '<input type="text" class="form-control" name="firstName" required placeholder="First name" data-fv-notempty-message="The first name is required" data-fv-container="#firstNameMessage" />',
-                        '<span class="help-block" id="firstNameMessage" />',
+                        '<span class="invalid-feedback" id="firstNameMessage" />',
                     '</div>',
                     '<div class="col-lg-4">',
                         '<input type="text" class="form-control" name="lastName" required placeholder="Last name" data-fv-notempty-message="The last name is required" />',
-                        '<span class="help-block lastNameMessage" />',
+                        '<span class="invalid-feedback lastNameMessage" />',
                     '</div>',
                 '</div>',
             '</form>'
@@ -109,15 +109,15 @@ describe('container field option', function() {
         this.$firstName.val('First');
         this.$lastName.val('');
         this.fv.validate();
-        expect($('#firstNameMessage').find('.help-block:visible').length).toEqual(0);
-        expect($('.lastNameMessage').find('.help-block:visible').length).toBeGreaterThan(0);
+        expect($('#firstNameMessage').find('.invalid-feedback:visible').length).toEqual(0);
+        expect($('.lastNameMessage').find('.invalid-feedback:visible').length).toBeGreaterThan(0);
 
         this.fv.resetForm();
         this.$firstName.val('');
         this.$lastName.val('Last');
         this.fv.validate();
-        expect($('#firstNameMessage').find('.help-block:visible').length).toBeGreaterThan(0);
-        expect($('.lastNameMessage').find('.help-block:visible').length).toEqual(0);
+        expect($('#firstNameMessage').find('.invalid-feedback:visible').length).toBeGreaterThan(0);
+        expect($('.lastNameMessage').find('.invalid-feedback:visible').length).toEqual(0);
     });
 });
 
@@ -151,9 +151,9 @@ describe('container tooltip/popover', function() {
                 .end()
             .formValidation({
                 icon: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
+                    valid: 'fa fa-check',
+                    invalid: 'fa fa-times',
+                    validating: 'fa fa-sync'
                 }
             });
 
@@ -178,9 +178,9 @@ describe('container tooltip/popover', function() {
     it('container programmatically', function() {
         $('#containerForm').formValidation({
             icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
+                valid: 'fa fa-check',
+                invalid: 'fa fa-times',
+                validating: 'fa fa-sync'
             },
             err: {
                 container: 'tooltip'
@@ -214,9 +214,9 @@ describe('container tooltip/popover', function() {
     it('trigger: blur, container: tooltip', function() {
         $('#containerForm').formValidation({
             icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
+                valid: 'fa fa-check',
+                invalid: 'fa fa-times',
+                validating: 'fa fa-sync'
             },
             err: {
                 container: 'tooltip'

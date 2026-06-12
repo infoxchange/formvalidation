@@ -16,9 +16,9 @@ describe('api', function() {
 
         $('#apiForm').formValidation({
             icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
+                valid: 'fa fa-check',
+                invalid: 'fa fa-times',
+                validating: 'fa fa-sync'
             }
         });
 
@@ -45,16 +45,15 @@ describe('api', function() {
         this.fv.destroy();
         expect($('#apiForm').data('formValidation')).toBeUndefined();
         expect($('#apiForm').find('i[data-fv-icon-for]').length).toEqual(0);
-        expect($('#apiForm').find('.help-block[data-fv-for]').length).toEqual(0);
-        expect($('#apiForm').find('.has-feedback').length).toEqual(0);
-        expect($('#apiForm').find('.has-success').length).toEqual(0);
-        expect($('#apiForm').find('.has-error').length).toEqual(0);
+        expect($('#apiForm').find('.invalid-feedback[data-fv-for]').length).toEqual(0);
+        expect($('#apiForm').find('.is-invalid').length).toEqual(0);
+        expect($('#apiForm').find('.is-valid').length).toEqual(0);
         expect($('#apiForm').find('[data-fv-field]').length).toEqual(0);
     });
 
     it('getOptions()', function() {
         // Form options
-        expect(this.fv.getOptions().icon.valid).toEqual('glyphicon glyphicon-ok');
+        expect(this.fv.getOptions().icon.valid).toEqual('fa fa-check');
 
         // Field options
         expect(this.fv.getOptions('username', 'stringlength')).toBeNull();
