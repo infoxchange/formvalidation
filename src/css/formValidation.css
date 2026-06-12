@@ -32,22 +32,11 @@
 /* ~~~ For Bootstrap form ~~~ */
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-.fv-form-bootstrap .help-block {
+.fv-form-bootstrap .invalid-feedback {
     margin-bottom: 0;
 }
 .fv-form-bootstrap .tooltip-inner {
     text-align: left;
-}
-/* Bootstrap stacked form without label */
-.fv-form-bootstrap .fv-icon-no-label {
-	top: 0;
-}
-.fv-form-bootstrap .fv-bootstrap-icon-input-group {
-	z-index: 100;
-}
-/* Bootstrap inline form */
-.form-inline.fv-form-bootstrap .form-group {
-    vertical-align: top;
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~ */

@@ -19,30 +19,15 @@
                 // http://getbootstrap.com/css/#buttons-disabled
                 disabled: 'disabled'
             },
-            err: {
-                // http://getbootstrap.com/css/#forms-help-text
-                clazz: 'help-block',
-                parent: '^(.*)col-(xs|sm|md|lg)-(offset-){0,1}[0-9]+(.*)$'
+            control: {
+                valid:   'is-valid',
+                invalid: 'is-invalid'
             },
-            // This feature requires Bootstrap v3.1.0 or later (http://getbootstrap.com/css/#forms-control-validation).
-            // Since Bootstrap doesn't provide any methods to know its version, this option cannot be on/off automatically.
-            // In other word, to use this feature you have to upgrade your Bootstrap to v3.1.0 or later.
-            //
-            // Examples:
-            // - Use Glyphicons icons:
-            //  icon: {
-            //      valid: 'glyphicon glyphicon-ok',
-            //      invalid: 'glyphicon glyphicon-remove',
-            //      validating: 'glyphicon glyphicon-refresh',
-            //      feedback: 'form-control-feedback'
-            //  }
-            // - Use FontAwesome icons:
-            //  icon: {
-            //      valid: 'fa fa-check',
-            //      invalid: 'fa fa-times',
-            //      validating: 'fa fa-refresh',
-            //      feedback: 'form-control-feedback'
-            //  }
+            err: {
+                // http://getbootstrap.com/docs/5.0/forms/validation/
+                clazz:  'invalid-feedback',
+                parent: '^(.*)col-(sm|md|lg|xl|xxl)-(offset-){0,1}[0-9]+(.*)$'
+            },
             icon: {
                 valid: null,
                 invalid: null,
@@ -50,12 +35,12 @@
                 feedback: 'form-control-feedback'
             },
             row: {
-                // By default, each field is placed inside the <div class="form-group"></div>
-                // http://getbootstrap.com/css/#forms
+                // .form-group is unstyled in BS5 but kept as the library's row anchor.
+                // Portal app wrappers should use class="mb-3 form-group".
                 selector: '.form-group',
-                valid: 'has-success',
-                invalid: 'has-error',
-                feedback: 'has-feedback'
+                valid:    '',
+                invalid:  '',
+                feedback: ''
             }
         }, options);
 
@@ -80,9 +65,9 @@
             // so when clicking the icon, it doesn't effect to the checkbox/radio element
             if ('checkbox' === type || 'radio' === type) {
                 var $fieldParent = $field.parent();
-                if ($fieldParent.hasClass(type)) {
+                if ($fieldParent.hasClass('form-check')) {
                     $icon.insertAfter($fieldParent);
-                } else if ($fieldParent.parent().hasClass(type)) {
+                } else if ($fieldParent.parent().hasClass('form-check')) {
                     $icon.insertAfter($fieldParent.parent());
                 }
             }
@@ -111,38 +96,33 @@
             var ns    = this._namespace,
                 $icon = $field.data(ns + '.icon');
             if ($icon) {
+                var el = $icon[0],
+                    instance;
+                $icon.css({ 'cursor': 'pointer', 'pointer-events': 'auto' });
                 switch (type) {
                     case 'popover':
-                        $icon
-                            .css({
-                                'cursor': 'pointer',
-                                'pointer-events': 'auto'
-                            })
-                            .popover('destroy')
-                            .popover({
-                                container: 'body',
-                                content: message,
-                                html: true,
-                                placement: 'auto top',
-                                trigger: 'hover click'
-                            });
+                        instance = bootstrap.Popover.getInstance(el);
+                        if (instance) { instance.dispose(); }
+                        new bootstrap.Popover(el, {
+                            container: 'body',
+                            content: message,
+                            html: true,
+                            placement: 'top',
+                            trigger: 'hover click'
+                        });
                         break;
 
                     case 'tooltip':
                     /* falls through */
                     default:
-                        $icon
-                            .css({
-                                'cursor': 'pointer',
-                                'pointer-events': 'auto'
-                            })
-                            .tooltip('destroy')
-                            .tooltip({
-                                container: 'body',
-                                html: true,
-                                placement: 'auto top',
-                                title: message
-                            });
+                        instance = bootstrap.Tooltip.getInstance(el);
+                        if (instance) { instance.dispose(); }
+                        new bootstrap.Tooltip(el, {
+                            container: 'body',
+                            html: true,
+                            placement: 'top',
+                            title: message
+                        });
                         break;
                 }
             }
@@ -158,25 +138,20 @@
             var ns    = this._namespace,
                 $icon = $field.data(ns + '.icon');
             if ($icon) {
+                var el = $icon[0],
+                    instance;
+                $icon.css({ 'cursor': '', 'pointer-events': 'none' });
                 switch (type) {
                     case 'popover':
-                        $icon
-                            .css({
-                                'cursor': '',
-                                'pointer-events': 'none'
-                            })
-                            .popover('destroy');
+                        instance = bootstrap.Popover.getInstance(el);
+                        if (instance) { instance.dispose(); }
                         break;
 
                     case 'tooltip':
                     /* falls through */
                     default:
-                        $icon
-                            .css({
-                                'cursor': '',
-                                'pointer-events': 'none'
-                            })
-                            .tooltip('destroy');
+                        instance = bootstrap.Tooltip.getInstance(el);
+                        if (instance) { instance.dispose(); }
                         break;
                 }
             }
@@ -192,15 +167,19 @@
             var ns    = this._namespace,
                 $icon = $field.data(ns + '.icon');
             if ($icon) {
+                var el = $icon[0],
+                    instance;
                 switch (type) {
                     case 'popover':
-                        $icon.popover('hide');
+                        instance = bootstrap.Popover.getInstance(el);
+                        if (instance) { instance.hide(); }
                         break;
 
                     case 'tooltip':
                     /* falls through */
                     default:
-                        $icon.tooltip('hide');
+                        instance = bootstrap.Tooltip.getInstance(el);
+                        if (instance) { instance.hide(); }
                         break;
                 }
             }
@@ -216,15 +195,19 @@
             var ns    = this._namespace,
                 $icon = $field.data(ns + '.icon');
             if ($icon) {
+                var el = $icon[0],
+                    instance;
                 switch (type) {
                     case 'popover':
-                        $icon.popover('show');
+                        instance = bootstrap.Popover.getInstance(el);
+                        if (instance) { instance.show(); }
                         break;
 
                     case 'tooltip':
                     /* falls through */
                     default:
-                        $icon.tooltip('show');
+                        instance = bootstrap.Tooltip.getInstance(el);
+                        if (instance) { instance.show(); }
                         break;
                 }
             }

@@ -31,6 +31,8 @@
         "url": "https://github.com/formvalidation/formvalidation.git"
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.4",
+        "bootstrap": "^5.3.8",
         "grunt": "latest",
         "grunt-contrib-concat": "latest",
         "grunt-contrib-copy": "latest",

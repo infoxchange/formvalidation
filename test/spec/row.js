@@ -75,31 +75,31 @@ describe('row option', function() {
     it('default', function() {
         this.$username.val('123@#$');
         this.fv.validate();
-        expect(this.$username.parents('.form-group').hasClass('has-error')).toBeTruthy();
-        expect(this.$username.parents('.form-group').hasClass('has-success')).toEqual(false);
+        expect(this.$username.hasClass('is-invalid')).toBeTruthy();
+        expect(this.$username.hasClass('is-valid')).toEqual(false);
 
         this.fv.resetForm();
         this.$username.val('validUser.Name');
         this.fv.validate();
-        expect(this.$username.parents('.form-group').hasClass('has-success')).toBeTruthy();
-        expect(this.$username.parents('.form-group').hasClass('has-error')).toEqual(false);
+        expect(this.$username.hasClass('is-valid')).toBeTruthy();
+        expect(this.$username.hasClass('is-invalid')).toEqual(false);
     });
 
     it('programmatically usage', function() {
         this.$firstName.val('');
         this.fv.validate();
-        expect(this.$firstName.parents('.firstNameGroup').hasClass('has-error')).toBeTruthy();
-        expect(this.$firstName.parents('.firstNameGroup').hasClass('has-success')).toEqual(false);
-        expect(this.$firstName.parents('.form-group').hasClass('has-error')).toEqual(false);
+        expect(this.$firstName.hasClass('is-invalid')).toBeTruthy();
+        expect(this.$firstName.hasClass('is-valid')).toEqual(false);
+        expect(this.$firstName.parents('.form-group').hasClass('is-invalid')).toEqual(false);
     });
 
     it('declarative usage', function() {
         this.$firstName.val('First');
         this.$lastName.val('Last');
         this.fv.validate();
-        expect(this.$lastName.parents('.lastNameGroup').hasClass('has-success')).toBeTruthy();
-        expect(this.$lastName.parents('.lastNameGroup').hasClass('has-error')).toEqual(false);
-        expect(this.$lastName.parents('.form-group').hasClass('has-success')).toEqual(false);
-        expect(this.$lastName.parents('.form-group').hasClass('has-error')).toEqual(false);
+        expect(this.$lastName.hasClass('is-valid')).toBeTruthy();
+        expect(this.$lastName.hasClass('is-invalid')).toEqual(false);
+        expect(this.$lastName.parents('.form-group').hasClass('is-valid')).toEqual(false);
+        expect(this.$lastName.parents('.form-group').hasClass('is-invalid')).toEqual(false);
     });
 });

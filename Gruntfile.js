@@ -150,12 +150,13 @@ module.exports = function(grunt) {
             src: '<%= dirs.dist %>/js/**/*.js',
             options: {
                 specs: '<%= dirs.test %>/spec/**/*.js',
-                host: '<%= host %>',
                 vendor: [
                     '<%= dirs.vendor %>/jquery/jquery.min.js',
-                    '<%= dirs.vendor %>/bootstrap/js/bootstrap.min.js'
+                    '<%= dirs.vendor %>/bootstrap/js/bootstrap.bundle.min.js'
                 ],
-                helpers: '<%= dirs.test %>/helper.js'
+                helpers: '<%= dirs.test %>/helper.js',
+                sandboxArgs: { args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [] }, // required for Puppeteer in CI
+                allowFileAccess: true
             }
         },
 
@@ -181,7 +182,9 @@ module.exports = function(grunt) {
                 white: true,
                 globals: {
                     jQuery: false,
-                    FormValidation: false
+                    FormValidation: false,
+                    JSON: false,
+                    bootstrap: false
                 }
             }
         },

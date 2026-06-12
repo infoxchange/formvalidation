@@ -29,13 +29,13 @@ describe('container form option', function() {
         this.$firstName = this.fv.getFieldElements('firstName');
         this.$lastName  = this.fv.getFieldElements('lastName');
 
-        expect($('#errors').find('.help-block').length).toBeGreaterThan(0);
+        expect($('#errors').find('.invalid-feedback').length).toBeGreaterThan(0);
 
         this.$firstName.val('First');
         this.$lastName.val('');
         this.fv.validate();
-        expect($('#errors').find('.help-block:visible[data-fv-for="firstName"]').length).toEqual(0);
-        expect($('#errors').find('.help-block:visible[data-fv-for="lastName"]').length).toBeGreaterThan(0);
+        expect($('#errors').find('.invalid-feedback:visible[data-fv-for="firstName"]').length).toEqual(0);
+        expect($('#errors').find('.invalid-feedback:visible[data-fv-for="lastName"]').length).toBeGreaterThan(0);
     });
 
     it('form container programmatically', function() {
@@ -49,19 +49,19 @@ describe('container form option', function() {
         this.$firstName = this.fv.getFieldElements('firstName');
         this.$lastName  = this.fv.getFieldElements('lastName');
 
-        expect($('#errors').find('.help-block').length).toBeGreaterThan(0);
+        expect($('#errors').find('.invalid-feedback').length).toBeGreaterThan(0);
 
         this.$firstName.val('');
         this.$lastName.val('Last');
         this.fv.validate();
-        expect($('#errors').find('.help-block:visible[data-fv-for="firstName"]').length).toBeGreaterThan(0);
-        expect($('#errors').find('.help-block:visible[data-fv-for="lastName"]').length).toEqual(0);
+        expect($('#errors').find('.invalid-feedback:visible[data-fv-for="firstName"]').length).toBeGreaterThan(0);
+        expect($('#errors').find('.invalid-feedback:visible[data-fv-for="lastName"]').length).toEqual(0);
 
         this.fv.resetForm();
         this.$firstName.val('First');
         this.$lastName.val('Last');
         this.fv.validate();
-        expect($('#errors').find('.help-block:visible').length).toEqual(0);
+        expect($('#errors').find('.invalid-feedback:visible').length).toEqual(0);
     });
 });
 
@@ -73,11 +73,11 @@ describe('container field option', function() {
                     '<label class="col-lg-3 control-label">Full name</label>',
                     '<div class="col-lg-4">',
                         '<input type="text" class="form-control" name="firstName" required placeholder="First name" data-fv-notempty-message="The first name is required" data-fv-container="#firstNameMessage" />',
-                        '<span class="help-block" id="firstNameMessage" />',
+                        '<span class="invalid-feedback" id="firstNameMessage" />',
                     '</div>',
                     '<div class="col-lg-4">',
                         '<input type="text" class="form-control" name="lastName" required placeholder="Last name" data-fv-notempty-message="The last name is required" />',
-                        '<span class="help-block lastNameMessage" />',
+                        '<span class="invalid-feedback lastNameMessage" />',
                     '</div>',
                 '</div>',
             '</form>'
@@ -109,15 +109,15 @@ describe('container field option', function() {
         this.$firstName.val('First');
         this.$lastName.val('');
         this.fv.validate();
-        expect($('#firstNameMessage').find('.help-block:visible').length).toEqual(0);
-        expect($('.lastNameMessage').find('.help-block:visible').length).toBeGreaterThan(0);
+        expect($('#firstNameMessage').find('.invalid-feedback:visible').length).toEqual(0);
+        expect($('.lastNameMessage').find('.invalid-feedback:visible').length).toBeGreaterThan(0);
 
         this.fv.resetForm();
         this.$firstName.val('');
         this.$lastName.val('Last');
         this.fv.validate();
-        expect($('#firstNameMessage').find('.help-block:visible').length).toBeGreaterThan(0);
-        expect($('.lastNameMessage').find('.help-block:visible').length).toEqual(0);
+        expect($('#firstNameMessage').find('.invalid-feedback:visible').length).toBeGreaterThan(0);
+        expect($('.lastNameMessage').find('.invalid-feedback:visible').length).toEqual(0);
     });
 });
 
@@ -151,9 +151,9 @@ describe('container tooltip/popover', function() {
                 .end()
             .formValidation({
                 icon: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
+                    valid: 'fa fa-check',
+                    invalid: 'fa fa-times',
+                    validating: 'fa fa-sync'
                 }
             });
 
@@ -162,25 +162,23 @@ describe('container tooltip/popover', function() {
         this.$lastName  = this.fv.getFieldElements('lastName');
 
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeDefined();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').type).toEqual('tooltip');
-        expect(this.$lastName.parent().find('i').data('bs.popover')).toBeDefined();
-        expect(this.$lastName.parent().find('i').data('bs.popover').type).toEqual('popover');
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).not.toBeNull();
+        expect(bootstrap.Popover.getInstance(this.$lastName.parent().find('i')[0])).not.toBeNull();
 
         this.fv.resetForm();
         this.$firstName.val('First');
         this.$lastName.val('Last');
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeUndefined();
-        expect(this.$lastName.parent().find('i').data('bs.popover')).toBeUndefined();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).toBeNull();
+        expect(bootstrap.Popover.getInstance(this.$lastName.parent().find('i')[0])).toBeNull();
     });
 
     it('container programmatically', function() {
         $('#containerForm').formValidation({
             icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
+                valid: 'fa fa-check',
+                invalid: 'fa fa-times',
+                validating: 'fa fa-sync'
             },
             err: {
                 container: 'tooltip'
@@ -197,26 +195,24 @@ describe('container tooltip/popover', function() {
         this.$lastName  = this.fv.getFieldElements('lastName');
 
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeDefined();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').type).toEqual('tooltip');
-        expect(this.$lastName.parent().find('i').data('bs.popover')).toBeDefined();
-        expect(this.$lastName.parent().find('i').data('bs.popover').type).toEqual('popover');
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).not.toBeNull();
+        expect(bootstrap.Popover.getInstance(this.$lastName.parent().find('i')[0])).not.toBeNull();
 
         this.fv.resetForm();
         this.$firstName.val('First');
         this.$lastName.val('Last');
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeUndefined();
-        expect(this.$lastName.parent().find('i').data('bs.popover')).toBeUndefined();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).toBeNull();
+        expect(bootstrap.Popover.getInstance(this.$lastName.parent().find('i')[0])).toBeNull();
     });
 
     // #991: Validate once when setting trigger: blur, container: tooltip
     it('trigger: blur, container: tooltip', function() {
         $('#containerForm').formValidation({
             icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
+                valid: 'fa fa-check',
+                invalid: 'fa fa-times',
+                validating: 'fa fa-sync'
             },
             err: {
                 container: 'tooltip'
@@ -262,30 +258,27 @@ describe('container tooltip/popover', function() {
 
         this.$firstName.val('').trigger('blur');
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeDefined();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').type).toEqual('tooltip');
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').getTitle()).toEqual('The first name is required');
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).not.toBeNull();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])._config.title).toEqual('The first name is required');
 
         this.fv.resetForm();
         this.$firstName.val('@not#valid');
         this.$lastName.val('').focus();
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeDefined();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').type).toEqual('tooltip');
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').getTitle()).toEqual('The first name must consist of a-z, A-Z characters only');
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).not.toBeNull();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])._config.title).toEqual('The first name must consist of a-z, A-Z characters only');
 
         this.fv.resetForm();
         this.$firstName.val('Phuo');
         this.$lastName.val('').focus();
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeDefined();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').type).toEqual('tooltip');
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').getTitle()).toEqual('The first name must be more than 5 characters');
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).not.toBeNull();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])._config.title).toEqual('The first name must be more than 5 characters');
 
         this.fv.resetForm();
         this.$firstName.val('Phuoc');
         this.$lastName.val('').focus();
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeUndefined();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).toBeNull();
     });
 });
