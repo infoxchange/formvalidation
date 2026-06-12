@@ -152,7 +152,7 @@ module.exports = function(grunt) {
                 specs: '<%= dirs.test %>/spec/**/*.js',
                 vendor: [
                     '<%= dirs.vendor %>/jquery/jquery.min.js',
-                    '<%= dirs.vendor %>/bootstrap/js/bootstrap.min.js'
+                    '<%= dirs.vendor %>/bootstrap/js/bootstrap.bundle.min.js'
                 ],
                 helpers: '<%= dirs.test %>/helper.js',
                 sandboxArgs: { args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [] }, // required for Puppeteer in CI
