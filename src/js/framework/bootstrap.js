@@ -65,9 +65,9 @@
             // so when clicking the icon, it doesn't effect to the checkbox/radio element
             if ('checkbox' === type || 'radio' === type) {
                 var $fieldParent = $field.parent();
-                if ($fieldParent.hasClass(type)) {
+                if ($fieldParent.hasClass('form-check')) {
                     $icon.insertAfter($fieldParent);
-                } else if ($fieldParent.parent().hasClass(type)) {
+                } else if ($fieldParent.parent().hasClass('form-check')) {
                     $icon.insertAfter($fieldParent.parent());
                 }
             }
