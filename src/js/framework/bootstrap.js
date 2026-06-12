@@ -19,30 +19,15 @@
                 // http://getbootstrap.com/css/#buttons-disabled
                 disabled: 'disabled'
             },
-            err: {
-                // http://getbootstrap.com/css/#forms-help-text
-                clazz: 'help-block',
-                parent: '^(.*)col-(xs|sm|md|lg)-(offset-){0,1}[0-9]+(.*)$'
+            control: {
+                valid:   'is-valid',
+                invalid: 'is-invalid'
             },
-            // This feature requires Bootstrap v3.1.0 or later (http://getbootstrap.com/css/#forms-control-validation).
-            // Since Bootstrap doesn't provide any methods to know its version, this option cannot be on/off automatically.
-            // In other word, to use this feature you have to upgrade your Bootstrap to v3.1.0 or later.
-            //
-            // Examples:
-            // - Use Glyphicons icons:
-            //  icon: {
-            //      valid: 'glyphicon glyphicon-ok',
-            //      invalid: 'glyphicon glyphicon-remove',
-            //      validating: 'glyphicon glyphicon-refresh',
-            //      feedback: 'form-control-feedback'
-            //  }
-            // - Use FontAwesome icons:
-            //  icon: {
-            //      valid: 'fa fa-check',
-            //      invalid: 'fa fa-times',
-            //      validating: 'fa fa-refresh',
-            //      feedback: 'form-control-feedback'
-            //  }
+            err: {
+                // http://getbootstrap.com/docs/5.0/forms/validation/
+                clazz:  'invalid-feedback',
+                parent: '^(.*)col-(sm|md|lg|xl|xxl)-(offset-){0,1}[0-9]+(.*)$'
+            },
             icon: {
                 valid: null,
                 invalid: null,
@@ -50,12 +35,12 @@
                 feedback: 'form-control-feedback'
             },
             row: {
-                // By default, each field is placed inside the <div class="form-group"></div>
-                // http://getbootstrap.com/css/#forms
+                // .form-group is unstyled in BS5 but kept as the library's row anchor.
+                // Portal app wrappers should use class="mb-3 form-group".
                 selector: '.form-group',
-                valid: 'has-success',
-                invalid: 'has-error',
-                feedback: 'has-feedback'
+                valid:    '',
+                invalid:  '',
+                feedback: ''
             }
         }, options);
 
