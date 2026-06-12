@@ -162,17 +162,15 @@ describe('container tooltip/popover', function() {
         this.$lastName  = this.fv.getFieldElements('lastName');
 
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeDefined();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').type).toEqual('tooltip');
-        expect(this.$lastName.parent().find('i').data('bs.popover')).toBeDefined();
-        expect(this.$lastName.parent().find('i').data('bs.popover').type).toEqual('popover');
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).not.toBeNull();
+        expect(bootstrap.Popover.getInstance(this.$lastName.parent().find('i')[0])).not.toBeNull();
 
         this.fv.resetForm();
         this.$firstName.val('First');
         this.$lastName.val('Last');
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeUndefined();
-        expect(this.$lastName.parent().find('i').data('bs.popover')).toBeUndefined();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).toBeNull();
+        expect(bootstrap.Popover.getInstance(this.$lastName.parent().find('i')[0])).toBeNull();
     });
 
     it('container programmatically', function() {
@@ -197,17 +195,15 @@ describe('container tooltip/popover', function() {
         this.$lastName  = this.fv.getFieldElements('lastName');
 
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeDefined();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').type).toEqual('tooltip');
-        expect(this.$lastName.parent().find('i').data('bs.popover')).toBeDefined();
-        expect(this.$lastName.parent().find('i').data('bs.popover').type).toEqual('popover');
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).not.toBeNull();
+        expect(bootstrap.Popover.getInstance(this.$lastName.parent().find('i')[0])).not.toBeNull();
 
         this.fv.resetForm();
         this.$firstName.val('First');
         this.$lastName.val('Last');
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeUndefined();
-        expect(this.$lastName.parent().find('i').data('bs.popover')).toBeUndefined();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).toBeNull();
+        expect(bootstrap.Popover.getInstance(this.$lastName.parent().find('i')[0])).toBeNull();
     });
 
     // #991: Validate once when setting trigger: blur, container: tooltip
@@ -262,30 +258,27 @@ describe('container tooltip/popover', function() {
 
         this.$firstName.val('').trigger('blur');
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeDefined();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').type).toEqual('tooltip');
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').getTitle()).toEqual('The first name is required');
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).not.toBeNull();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])._config.title).toEqual('The first name is required');
 
         this.fv.resetForm();
         this.$firstName.val('@not#valid');
         this.$lastName.val('').focus();
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeDefined();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').type).toEqual('tooltip');
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').getTitle()).toEqual('The first name must consist of a-z, A-Z characters only');
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).not.toBeNull();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])._config.title).toEqual('The first name must consist of a-z, A-Z characters only');
 
         this.fv.resetForm();
         this.$firstName.val('Phuo');
         this.$lastName.val('').focus();
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeDefined();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').type).toEqual('tooltip');
-        expect(this.$firstName.parent().find('i').data('bs.tooltip').getTitle()).toEqual('The first name must be more than 5 characters');
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).not.toBeNull();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])._config.title).toEqual('The first name must be more than 5 characters');
 
         this.fv.resetForm();
         this.$firstName.val('Phuoc');
         this.$lastName.val('').focus();
         this.fv.validate();
-        expect(this.$firstName.parent().find('i').data('bs.tooltip')).toBeUndefined();
+        expect(bootstrap.Tooltip.getInstance(this.$firstName.parent().find('i')[0])).toBeNull();
     });
 });
