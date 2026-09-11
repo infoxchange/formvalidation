@@ -51,6 +51,8 @@
         },
         "globule": {
             "minimatch": "3.1.5"
-        }
+        },
+        "puppeteer": "25.10.0",
+        "@puppeteer/browsers": "3.2.2"
     }
 }
